@@ -68,8 +68,10 @@ class Running(Training):
         self.coeff_calorie_1 = 18
         self.coeff_calorie_2 = 20
         self.duration_in_minute = self.duration * 60
-        self.spent_calories = (self.coeff_calorie_1 * self.get_mean_speed()
-                               - self.coeff_calorie_2) * self.weight / self.M_IN_KM * self.duration_in_minute
+        self.spent_calories = (self.coeff_calorie_1
+                               * self.get_mean_speed()
+                               - self.coeff_calorie_2) * self.weight /\
+            self.M_IN_KM * self.duration_in_minute
         return self.spent_calories
 
     pass
@@ -79,7 +81,10 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     TRINING_TYPE: str = 'SportsWalking'
 
-    def __init__(self, action: int, duration: float, weight: float, height: int) -> None:
+    def __init__(self,
+                 action: int,
+                 duration: float, weight: float,
+                 height: int) -> None:
         super().__init__(action, duration, weight)
         self.height = height
         pass
@@ -88,8 +93,10 @@ class SportsWalking(Training):
         self.coeff_calorie_1 = 0.035
         self.coeff_calorie_2 = 0.029
         self.duration_in_minute = self.duration * 60
-        self.spent_calories = (self.coeff_calorie_1 * self.weight + (self.get_mean_speed(
-        )**2 // self.height) * self.coeff_calorie_2 * self.weight) * self.duration_in_minute
+        self.spent_calories = (self.coeff_calorie_1 * self.weight
+                               + (self.get_mean_speed()**2 // self.height)
+                               * self.coeff_calorie_2
+                               * self.weight) * self.duration_in_minute
         return self.spent_calories
 
     pass
@@ -100,7 +107,11 @@ class Swimming(Training):
     LEN_STEP: float = 1.38
     TRINING_TYPE: str = 'Swimming'
 
-    def __init__(self, action: int, duration: float, weight: float, length_pool: float, count_pool: float) -> None:
+    def __init__(self, action: int,
+                 duration: float,
+                 weight: float,
+                 length_pool: float,
+                 count_pool: float) -> None:
         super().__init__(action, duration, weight)
         self.lenght_pool = length_pool
         self.count_pool = count_pool
