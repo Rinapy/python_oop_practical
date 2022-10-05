@@ -1,7 +1,12 @@
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
-    def __init__(self, training_type: str, duration: float, distance: float, speed: float, calories: float) -> None:
+    def __init__(self,
+                 training_type: str,
+                 duration: float,
+                 distance: float,
+                 speed: float,
+                 calories: float) -> None:
         self.training_type = training_type
         self.duration = duration
         self.distance = distance
@@ -10,7 +15,7 @@ class InfoMessage:
         pass
 
     def get_message(self) -> str:
-        return f'Тип тренировки: {self.training_type}; Длительность: {toFixed(self.duration)} ч.; Дистанция: {toFixed(self.distance)} км; Ср. скорость: {toFixed(self.speed)} км/ч; Потрачено ккал: {toFixed(self.calories)}.'
+        return (f'Тип тренировки: {self.training_type}; Длительность: {toFixed(self.duration)} ч.; Дистанция: {toFixed(self.distance)} км; Ср. скорость: {toFixed(self.speed)} км/ч; Потрачено ккал: {toFixed(self.calories)}.')
 
     pass
 
@@ -114,8 +119,10 @@ class Swimming(Training):
 
     pass
 
+
 def toFixed(numObj, digits=3):
     return f"{numObj:.{digits}f}"
+
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
