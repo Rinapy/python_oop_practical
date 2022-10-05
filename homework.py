@@ -15,11 +15,11 @@ class InfoMessage:
         pass
 
     def get_message(self) -> str:
-        return (f'Тип тренировки: {self.training_type};\
-             Длительность: {toFixed(self.duration)} ч.;\
-                 Дистанция: {toFixed(self.distance)} км;\
-                     Ср. скорость: {toFixed(self.speed)} км/ч;\
-                         Потрачено ккал: {toFixed(self.calories)}.')
+        return (f'Тип тренировки: {self.training_type};'
+        f' Длительность: {toFixed(self.duration)} ч.;'
+        f' Дистанция: {toFixed(self.distance)} км;'
+        f' Ср. скорость: {toFixed(self.speed)} км/ч;' 
+        f' Потрачено ккал: {toFixed(self.calories)}.')
 
     pass
 
