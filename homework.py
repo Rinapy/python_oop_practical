@@ -1,6 +1,7 @@
 from typing import Dict
 from dataclasses import dataclass
 
+
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
@@ -86,10 +87,12 @@ class SportsWalking(Training):
         self.height_ce = height
 
     def get_spent_calories(self) -> float:
-        self.spent_calories = (self.calorie_burn_rate_1 * self.weight_kg
+        self.spent_calories = ((self.calorie_burn_rate_1 * self.weight_kg
                                + (self.get_mean_speed()**2 // self.height_ce)
                                * self.calorie_burn_rate_2
-                               * self.weight_kg) * self.duration_h * self.H_IN_M
+                               * self.weight_kg)
+                               * self.duration_h * self.H_IN_M
+                               )
         return self.spent_calories
 
 
@@ -109,13 +112,18 @@ class Swimming(Training):
         self.count_pool = count_pool
 
     def get_mean_speed(self) -> float:
-        return (self.lenght_pool_me
-                * self.count_pool / self.M_IN_KM / self.duration_h
-                )
+        return (
+            (self.lenght_pool_me
+             * self.count_pool / self.M_IN_KM
+             / self.duration_h)
+        )
 
     def get_spent_calories(self) -> float:
-        self.spent_calories = (self.get_mean_speed(
-        ) + self.calorie_burn_rate_1) * self.calorie_burn_rate_2 * self.weight_kg
+        self.spent_calories = (
+            (self.get_mean_speed()
+             + self.calorie_burn_rate_1)
+            * self.calorie_burn_rate_2 * self.weight_kg
+        )
         return self.spent_calories
 
 
