@@ -1,5 +1,5 @@
-from typing import Dict
 from dataclasses import dataclass
+from typing import Type, Dict
 
 
 @dataclass
@@ -14,10 +14,10 @@ class InfoMessage:
     def get_message(self) -> str:
         return (
             f'Тип тренировки: {self.training_type}; '
-            f'Длительность: {to_fixed(self.duration)} ч.; '
-            f'Дистанция: {to_fixed(self.distance)} км; '
-            f'Ср. скорость: {to_fixed(self.speed)} км/ч; '
-            f'Потрачено ккал: {to_fixed(self.calories)}.'
+            f'Длительность: {self.duration:.3f} ч.; '
+            f'Дистанция: {self.distance:.3f} км; '
+            f'Ср. скорость: {self.speed:.3f} км/ч; '
+            f'Потрачено ккал: {self.calories:.3f}.'
         )
 
 
@@ -42,8 +42,7 @@ class Training:
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
-        self.mean_speed = self.get_distance() / self.duration_h
-        return self.mean_speed
+        return self.get_distance() / self.duration_h
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
@@ -61,14 +60,14 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    calorie_burn_rate_1: float = 18.0
-    calorie_burn_rate_2: float = 20.0
+    CALORIE_BURN_RATE_1: float = 18.0
+    CALORIE_BURN_RATE_2: float = 20.0
 
     def get_spent_calories(self) -> float:
         self.spent_calories = (
-            (self.calorie_burn_rate_1
+            (self.CALORIE_BURN_RATE_1
              * self.get_mean_speed()
-             - self.calorie_burn_rate_2) * self.weight_kg
+             - self.CALORIE_BURN_RATE_2) * self.weight_kg
             / self.M_IN_KM * self.duration_h * self.H_IN_M
         )
         return self.spent_calories
@@ -76,8 +75,8 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    calorie_burn_rate_1: float = 0.035
-    calorie_burn_rate_2: float = 0.029
+    CALORIE_BURN_RATE_1: float = 0.035
+    CALORIE_BURN_RATE_2: float = 0.029
 
     def __init__(self,
                  action: int,
@@ -87,9 +86,9 @@ class SportsWalking(Training):
         self.height_ce = height
 
     def get_spent_calories(self) -> float:
-        self.spent_calories = ((self.calorie_burn_rate_1 * self.weight_kg
+        self.spent_calories = ((self.CALORIE_BURN_RATE_1 * self.weight_kg
                                + (self.get_mean_speed()**2 // self.height_ce)
-                               * self.calorie_burn_rate_2
+                               * self.CALORIE_BURN_RATE_2
                                * self.weight_kg)
                                * self.duration_h * self.H_IN_M
                                )
@@ -98,9 +97,10 @@ class SportsWalking(Training):
 
 class Swimming(Training):
     """Тренировка: плавание."""
+
     LEN_STEP: float = 1.38
-    calorie_burn_rate_1: float = 1.1
-    calorie_burn_rate_2: float = 2
+    CALORIE_BURN_RATE_1: float = 1.1
+    CALORIE_BURN_RATE_2: float = 2
 
     def __init__(self, action: int,
                  duration: float,
@@ -121,19 +121,15 @@ class Swimming(Training):
     def get_spent_calories(self) -> float:
         self.spent_calories = (
             (self.get_mean_speed()
-             + self.calorie_burn_rate_1)
-            * self.calorie_burn_rate_2 * self.weight_kg
+             + self.CALORIE_BURN_RATE_1)
+            * self.CALORIE_BURN_RATE_2 * self.weight_kg
         )
         return self.spent_calories
 
 
-def to_fixed(numObj, digits=3):
-    return f"{numObj:.{digits}f}"
-
-
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    workout_type_dict: Dict[str, object] = {
+    workout_type_dict: Dict[str, Type[Training]]= {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking
