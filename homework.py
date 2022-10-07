@@ -134,7 +134,7 @@ def read_package(workout_type: str, data: list) -> Training:
         'RUN': Running,
         'WLK': SportsWalking
     }
-    training: object = workout_type_dict[workout_type](*data)
+    training: Type[Training] = workout_type_dict[workout_type](*data)
     return training
 
 
