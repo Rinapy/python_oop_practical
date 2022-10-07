@@ -1,6 +1,7 @@
 from dataclasses import dataclass, asdict
 from typing import Type, Dict
 
+
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
@@ -66,7 +67,6 @@ class Running(Training):
     CALORIE_BURN_RATE_2: float = 20.0
 
     def get_spent_calories(self) -> float:
-     
         return (
             (self.CALORIE_BURN_RATE_1
              * self.get_mean_speed()
