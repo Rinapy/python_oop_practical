@@ -1,5 +1,4 @@
 from dataclasses import dataclass, asdict
-from msilib.schema import Error
 from typing import Type, Dict
 
 
