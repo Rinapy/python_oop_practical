@@ -1,5 +1,6 @@
 from dataclasses import dataclass, asdict
 from typing import Type, Dict
+from sys import exit
 
 
 @dataclass
@@ -135,7 +136,14 @@ def read_package(workout_type: str, data: list) -> Training:
         'RUN': Running,
         'WLK': SportsWalking
     }
-    training: Type[Training] = workout_type_dict[workout_type](*data)
+    try:
+        training: Type[Training] = workout_type_dict[workout_type](*data)
+    except KeyError as error:
+        print(
+            f'Invalid workout code %s Available codes'
+            f'{workout_type_dict.keys()}' % str(error)
+        )
+        exit()     
     return training
 
 
