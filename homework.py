@@ -1,6 +1,6 @@
 from dataclasses import dataclass, asdict
+from msilib.schema import Error
 from typing import Type, Dict
-from sys import exit
 
 
 @dataclass
@@ -138,12 +138,10 @@ def read_package(workout_type: str, data: list) -> Training:
     }
     try:
         training: Type[Training] = workout_type_dict[workout_type](*data)
-    except KeyError as error:
-        print(
-            f'Invalid workout code %s Available codes'
-            f'{workout_type_dict.keys()}' % str(error)
-        )
-        exit()
+    except KeyError:
+        raise KeyError(
+            f'Invalid workout code "{workout_type}".'
+            f'Available codes {workout_type_dict.keys()}')
     return training
 
 
@@ -156,7 +154,7 @@ def main(training: Training) -> None:
 
 if __name__ == '__main__':
     packages = [
-        ('SWM', [720, 1, 80, 25, 40]),
+        ('SWs', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
     ]
