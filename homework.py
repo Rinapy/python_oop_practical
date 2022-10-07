@@ -143,7 +143,7 @@ def read_package(workout_type: str, data: list) -> Training:
             f'Invalid workout code %s Available codes'
             f'{workout_type_dict.keys()}' % str(error)
         )
-        exit()     
+        exit()
     return training
 
 
